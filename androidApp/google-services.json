@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "1093084373980",
+    "firebase_url": "https://ivr-system-7370e-default-rtdb.firebaseio.com",
+    "project_id": "ivr-system-7370e",
+    "storage_bucket": "ivr-system-7370e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093084373980:android:7248f85883e0f1f64ce519",
+        "android_client_info": {
+          "package_name": "com.example.ivr_audio_app.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093084373980-pc3av9cjce0pinig6dnarp2sah1j7lbq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-_DpY-X9Jk0HBO8_K-VIVvxsK8_SU-O0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093084373980-pc3av9cjce0pinig6dnarp2sah1j7lbq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093084373980:android:9b6c12721eb98f944ce519",
+        "android_client_info": {
+          "package_name": "com.example.ivr_call_app_20.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093084373980-pc3av9cjce0pinig6dnarp2sah1j7lbq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-_DpY-X9Jk0HBO8_K-VIVvxsK8_SU-O0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093084373980-pc3av9cjce0pinig6dnarp2sah1j7lbq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093084373980:android:ff55b7dc3ae5788f4ce519",
+        "android_client_info": {
+          "package_name": "com.example.ivr_calling_app.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093084373980-pc3av9cjce0pinig6dnarp2sah1j7lbq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-_DpY-X9Jk0HBO8_K-VIVvxsK8_SU-O0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093084373980-pc3av9cjce0pinig6dnarp2sah1j7lbq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
