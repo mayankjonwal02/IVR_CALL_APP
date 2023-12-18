@@ -49,9 +49,7 @@ class MainActivity : ComponentActivity() {
                     try{ var viewmodel = viewmodel(context) } catch (e:Exception){
                         sharedPreferences.edit().putString(ipkey,"0.0.0.0").apply()
                     }
-                    FirebaseDatabase.getInstance().reference.child("call").child("key").setValue(0)
-                    FirebaseDatabase.getInstance().reference.child("audio").child("key").setValue(0)
-                    FirebaseDatabase.getInstance().reference.child("message").child("key").setValue(0)
+
                     commonui()
 
                 }

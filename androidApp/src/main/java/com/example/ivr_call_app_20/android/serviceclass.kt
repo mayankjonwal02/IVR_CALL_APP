@@ -2,26 +2,17 @@ package com.example.ivr_calling_app.android;
 
 import android.app.PendingIntent
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.icu.util.TimeUnit
 import android.net.Uri
 import android.os.Build
 import android.os.IBinder
-import android.os.Message
 import android.telephony.SmsManager
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import com.example.ivr_call_app_20.android.Bluetooth.msgupdate
 import com.example.ivr_call_app_20.android.mybluetooth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.*
 import viewmodel
@@ -46,7 +37,7 @@ class mycallservice : Service()
         return viewmodel.data()
     }
 
-    fun sendsms(contact : String , message: String?)
+    fun sendsms(contact: String, message: String?, date: String, modifieddata: List<patientdata>)
     {
 //        FirebaseDatabase.getInstance().reference.child("message").child("key").setValue(1)
         val sentIntent = Intent("SMS_SENT")
@@ -69,12 +60,28 @@ class mycallservice : Service()
                 sentPendingIntent,
                 deliveredPendingIntent
             )
+            CoroutineScope(Dispatchers.IO).launch{
+                viewmodel.update(
+                    "day${daysbwdates(date, modifieddata[0].duedate)}",
+                    modifieddata[0].engagementid,
+                    "SMS Sent"
+                )
+            }
+
         }
         catch (e:Exception)
         {
-            Toast.makeText(this,e.message.toString(),Toast.LENGTH_SHORT).show()
+            GlobalScope.launch(Dispatchers.Main){ Toast.makeText(applicationContext, e.message.toString(), Toast.LENGTH_SHORT).show() }
+            Log.e("Tag1",message.toString())
+            CoroutineScope(Dispatchers.IO).launch{
+                viewmodel.update(
+                    "day${daysbwdates(date, modifieddata[0].duedate)}",
+                    modifieddata[0].engagementid,
+                    e.message.toString()
+                )
+            }
         }
-//        FirebaseDatabase.getInstance().reference.child("message").child("key").setValue(0)
+
     }
 
     override fun onCreate() {
@@ -127,19 +134,21 @@ class mycallservice : Service()
 
                                     if (daysbwdates(date, modifieddata[0].duedate) in 5..7) {
                                         mybluetooth._mymessage.value = msgupdate(1,"")
-                                        viewmodel.update(
-                                            "day${daysbwdates(date, modifieddata[0].duedate)}",
-                                            modifieddata[0].engagementid,
-                                            "SMS Sent"
-                                        )
+//                                        viewmodel.update(
+//                                            "day${daysbwdates(date, modifieddata[0].duedate)}",
+//                                            modifieddata[0].engagementid,
+//                                            "SMS Sent"
+//                                        )
                                         var sp = getsharedpreferences(this@mycallservice)
-                                        var mymessage = sp.getString("msg_type","")
+                                        var mymessage = sp.getString("msg_type","Hey @name@, you have a @operationtype@ operation on @duedate@")
                                         mymessage = mymessage?.replace("@name@",modifieddata[0].patientname, ignoreCase = true)
                                         mymessage = mymessage?.replace("@duedate@",modifieddata[0].duedate, ignoreCase = true)
                                         mymessage = mymessage?.replace("@operationtype@",modifieddata[0].operationtype, ignoreCase = true)
                                         sendsms(
                                             modifieddata[0].patientcno,
-                                            mymessage
+                                            mymessage,
+                                            date,
+                                            modifieddata
                                         )
                                         mybluetooth._mymessage.value = msgupdate(0,"")
                                     } else if (daysbwdates(date, modifieddata[0].duedate) in 1..4) {
@@ -153,19 +162,21 @@ class mycallservice : Service()
                                         Log.e("TAG1","calling ${modifieddata[0]}")
                                         delay(10000)
                                         var sp = getsharedpreferences(this@mycallservice)
-                                        var mymessage = sp.getString("msg_type","")
+                                        var mymessage = sp.getString("msg_type","Hey @name@, you have a @operationtype@ operation on @duedate@")
                                         mymessage = mymessage?.replace("@name@",modifieddata[0].patientname, ignoreCase = true)
                                         mymessage = mymessage?.replace("@duedate@",modifieddata[0].duedate, ignoreCase = true)
                                         mymessage = mymessage?.replace("@operationtype@",modifieddata[0].operationtype, ignoreCase = true)
                                         sendsms(
                                             modifieddata[0].patientcno,
-                                            mymessage
+                                            mymessage,
+                                            date,
+                                            modifieddata
                                         )
                                         makecall(modifieddata[0].patientcno)
                                         Log.e("TAG1","call function returned to ${modifieddata[0]}")
                                     }
                                 } catch (e: Exception) {
-                                    Toast.makeText(this@mycallservice, e.message.toString(), Toast.LENGTH_LONG).show()
+                                    withContext(Dispatchers.Main) { Toast.makeText(this@mycallservice, e.message.toString(), Toast.LENGTH_LONG).show() }
                                     Log.e("TAG1","error 1 " + e.toString())
                                 }
                             }
